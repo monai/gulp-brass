@@ -5,7 +5,7 @@ var es = require('event-stream');
 var symlink = require('gulp-symlink');
 var brass = require('./brass');
 
-var rpm = brass.create(brass.RPM);
+var rpm = brass.create(brass.RPM, { workDir: '.' });
 
 gulp.task('clean', function () {
     return gulp.src('tmp', { read: false })

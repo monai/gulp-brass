@@ -5,7 +5,7 @@ var rpm = require('./rpm');
 
 var RPM = 'rpm';
 var DEB = 'deb';
-var BUILDDIR_NAME = 'brass_build';
+var BUILD_DIR_NAME = 'brass_build';
 
 module.exports = {
     RPM: RPM,
@@ -20,8 +20,8 @@ function create(type, options) {
     
     cwd = process.cwd();
     workDir = options.workDir || os.tmpdir();
-    workDir = path.resolve(cwd, path.join(workDir, BUILDDIR_NAME));
     options.workDir = workDir;
+    options.BUILD_DIR = path.resolve(cwd, path.join(workDir, BUILD_DIR_NAME));
     
     if (type == RPM) {
         return rpm.create(options);
