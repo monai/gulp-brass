@@ -21,7 +21,7 @@ function create(type, options) {
     cwd = process.cwd();
     workDir = options.workDir || os.tmpdir();
     options.workDir = workDir;
-    options.BUILD_DIR = path.resolve(cwd, path.join(workDir, BUILD_DIR_NAME));
+    options.buildDir = path.resolve(cwd, path.join(workDir, BUILD_DIR_NAME));
     
     if (type == RPM) {
         return rpm.create(options);
