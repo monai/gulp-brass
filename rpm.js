@@ -20,23 +20,27 @@ $rpm.setupTask = function $setupTask() {
 
 $rpm.files = function $files(options) {
     return files(this, options);
-}
+};
+
+$rpm.asset = function $asset(filename) {
+    return asset(this, filename);
+};
+
+$rpm.spec = function $spec() {
+    return spec(this);
+};
 
 $rpm.build = function $build(callback) {
     build(this, dz(callback));
-}
+};
 
 $rpm.buildTask = function $buildTask() {
     return $rpm.build.bind(this);
-}
+};
 
 $rpm.renderFileList = function $renderFileList() {
     return renderFileList(this);
-}
-
-$rpm.renderSpecFile = function $renderSpecFile(callback) {
-    return renderSpecFile(this, dz(callback));
-}
+};
 
 module.exports = {
     create: create,
@@ -93,8 +97,25 @@ function files(instance, options) {
     });
 }
 
+function asset(instance, filename) {
+    return path.resolve(__dirname, 'assets', filename);
+}
+
+function spec(instance) {
+    instance.options.specFileList = instance.renderFileList();
+    return through.obj(function (file, enc, callback) {
+        var contents;
+        contents = file.contents.toString();
+        contents = ld.template(contents, instance.options, { variable: 'data' });
+        file.contents = new Buffer(contents);
+        dz(callback)(null, file);
+    });
+}
+
 function build(instance, callback) {
     var command;
+    
+    console.log(callback);
     
     // gutil.log('Building package', { em: true });
     
@@ -105,16 +126,7 @@ function build(instance, callback) {
         'spec'
     ]).join(' ');
     
-    instance.options.specFileList = instance.renderFileList();
-    
-    async.series([
-        function (callback) {
-            instance.renderSpecFile(callback);
-        }, function (callback) {
-            // gutil.log('Running: `'+ command +'` in: '+ instance.buildRoot_SPECS);
-            exec(command, { cwd: instance.buildRoot_SPECS }, callback);
-        }
-    ], callback);
+    exec(command, { cwd: instance.buildRoot_SPECS }, callback);
 }
 
 function renderFileList(instance) {
@@ -141,18 +153,4 @@ function renderFileList(instance) {
     }).join('\n');
     
     return out.join('\n');
-}
-
-function renderSpecFile(instance, callback) {
-    var spec;
-    async.series([
-        function (callback) {
-            fs.readFile(path.join(__dirname, 'assets/spec'), 'utf8', function (error, file) {
-                spec = ld.template(file, instance.options, { variable: 'data' });
-                callback(null);
-            });
-        }, function (callback) {
-            fs.writeFile(path.join(instance.buildDir_SPECS, 'spec'), spec, callback);
-        }
-    ], callback);
 }

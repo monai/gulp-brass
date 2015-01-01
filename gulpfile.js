@@ -42,10 +42,16 @@ gulp.task('rpm-files', [ 'rpm-setup' ], function () {
     .pipe(rpm.files());
 });
 
-gulp.task('rpm-build', [ 'rpm-setup', 'rpm-files' ], rpm.buildTask());
-
-gulp.task('foo', [ 'rpm-setup', 'rpm-files', 'rpm-build' ], function () {
-    
+gulp.task('rpm-spec', [ 'rpm-files' ], function () {
+    return gulp.src(rpm.asset('spec'))
+    .pipe(rpm.spec())
+    .pipe(gulp.dest(rpm.buildDir_SPECS));
 });
 
-gulp.task('default', [ 'foo' ]);
+gulp.task('rpm-build', [ 'rpm-setup', 'rpm-files', 'rpm-spec' ], rpm.buildTask());
+
+gulp.task('build', [ 'rpm-setup', 'rpm-files', 'rpm-spec', 'rpm-build' ], function () {
+    console.log('build finished');
+});
+
+gulp.task('default', [ 'build' ]);
