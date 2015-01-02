@@ -43,7 +43,7 @@ gulp.task('rpm-files', [ 'rpm-setup' ], function () {
 });
 
 gulp.task('rpm-spec', [ 'rpm-files' ], function () {
-    return gulp.src(rpm.asset('rpm/spec'))
+    return gulp.src(brass.assets('rpm/spec'))
     .pipe(rpm.spec())
     .pipe(gulp.dest(rpm.buildDir_SPECS));
 });
