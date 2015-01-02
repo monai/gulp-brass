@@ -42,11 +42,13 @@ gulp.task('rpm-files', [ 'rpm-setup' ], function () {
     .pipe(rpm.files());
 });
 
-gulp.task('rpm-spec', [ 'rpm-files' ], function () {
-    return gulp.src(brass.assets('rpm/spec'))
-    .pipe(rpm.spec())
-    .pipe(gulp.dest(rpm.buildDir_SPECS));
-});
+// gulp.task('rpm-spec', [ 'rpm-files' ], function () {
+//     return gulp.src(brass.util.assets('rpm/spec'))
+//     .pipe(rpm.spec())
+//     .pipe(gulp.dest(rpm.buildDir_SPECS));
+// });
+
+gulp.task('rpm-spec', [ 'rpm-files' ], rpm.specTask());
 
 gulp.task('rpm-build', [ 'rpm-setup', 'rpm-files', 'rpm-spec' ], rpm.buildTask());
 
