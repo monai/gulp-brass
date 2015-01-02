@@ -4,7 +4,7 @@ var rimraf = require('rimraf');
 var mkdirp = require('mkdirp');
 var symlink = require('gulp-symlink');
 var through = require('through2');
-var brass = require('./brass');
+var brass = require('./index');
 var util = require('util');
 
 var rpm = brass.create(brass.RPM, {
@@ -43,7 +43,7 @@ gulp.task('rpm-files', [ 'rpm-setup' ], function () {
 });
 
 gulp.task('rpm-spec', [ 'rpm-files' ], function () {
-    return gulp.src(rpm.asset('spec'))
+    return gulp.src(rpm.asset('rpm/spec'))
     .pipe(rpm.spec())
     .pipe(gulp.dest(rpm.buildDir_SPECS));
 });
