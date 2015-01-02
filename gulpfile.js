@@ -42,6 +42,21 @@ gulp.task('rpm-files', [ 'rpm-setup' ], function () {
     .pipe(rpm.files());
 });
 
+gulp.task('rpm-service', [ 'rpm-setup' ], function () {
+    var systemd = brass.service.create({
+        type: 'systemd',
+        name: 'theapp',
+        target: 'bin/theapp',
+        user: 'vagrant',
+        group: 'vagrant'
+    });
+    
+    return gulp.src(brass.util.assets('service/systemd'))
+    .pipe(systemd.file())
+    .pipe(gulp.dest(systemd.dest()))
+    .pipe(rpm.files());
+});
+
 // gulp.task('rpm-spec', [ 'rpm-files' ], function () {
 //     return gulp.src(brass.util.assets('rpm/spec'))
 //     .pipe(rpm.spec())
