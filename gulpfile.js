@@ -7,7 +7,8 @@ var through = require('through2');
 var brass = require('./index');
 var util = require('util');
 
-var rpm = brass.create(brass.RPM, {
+var rpm = brass.create({
+    type: 'rpm',
     workDir: '.',
     name: 'theapp',
     version: '0.0.1',
