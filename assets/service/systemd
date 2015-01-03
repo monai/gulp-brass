@@ -1,18 +1,18 @@
 [Unit]
-Description={{summary}}
+Description={{description}}
 Requires=network.target
 After=network.target
 
 [Service]
-ExecStart={{service.target}}
-PIDFile=/var/run/{{service.name}}.pid
+ExecStart={{target}}
+PIDFile=/var/run/{{name}}.pid
 Environment="NODE_ENV=production"
 
-{{#if service.user}}
-User={{service.user}}
+{{#if user}}
+User={{user}}
 {{/if}}
-{{#if service.group}}
-Group={{service.group}}
+{{#if group}}
+Group={{group}}
 {{/if}}
 
 [Install]

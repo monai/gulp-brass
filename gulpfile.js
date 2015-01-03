@@ -44,9 +44,10 @@ gulp.task('rpm-files', [ 'rpm-setup' ], function () {
 });
 
 gulp.task('rpm-service', [ 'rpm-setup' ], function () {
-    var systemd = brass.service.create(rpm, {
+    var systemd = brass.service.create({
         type: 'systemd',
         name: 'theapp',
+        description: rpm.options.description,
         target: '/usr/lib/theapp/bin/theapp',
         user: 'vagrant',
         group: 'vagrant'
