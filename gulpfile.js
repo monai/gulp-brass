@@ -43,17 +43,17 @@ gulp.task('rpm-files', [ 'rpm-setup' ], function () {
 });
 
 gulp.task('rpm-service', [ 'rpm-setup' ], function () {
-    var systemd = brass.service.create({
+    var systemd = brass.service.create(rpm, {
         type: 'systemd',
         name: 'theapp',
-        target: 'bin/theapp',
+        target: '/usr/lib/theapp/bin/theapp',
         user: 'vagrant',
         group: 'vagrant'
     });
     
     return gulp.src(brass.util.assets('service/systemd'))
     .pipe(systemd.file())
-    .pipe(gulp.dest(systemd.dest()))
+    .pipe(gulp.dest(path.join(rpm.buildRoot, '/lib/systemd/system')))
     .pipe(rpm.files());
 });
 
@@ -70,9 +70,9 @@ gulp.task('rpm-spec', [ 'rpm-files' ], rpm.specTask());
 //     .pipe(rpm.build());
 // });
 
-gulp.task('rpm-build', [ 'rpm-setup', 'rpm-files', 'rpm-spec' ], rpm.buildTask());
+gulp.task('rpm-build', [ 'rpm-setup', 'rpm-files', 'rpm-service', 'rpm-spec' ], rpm.buildTask());
 
-gulp.task('build', [ 'rpm-setup', 'rpm-files', 'rpm-spec', 'rpm-build' ], function () {
+gulp.task('build', [ 'rpm-setup', 'rpm-files', 'rpm-spec', 'rpm-service', 'rpm-build' ], function () {
     console.log('build finished');
 });
 

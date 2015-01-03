@@ -1,0 +1,18 @@
+[Unit]
+Description=<%= data.summary %>
+Requires=network.target
+After=network.target
+
+[Service]
+ExecStart=<%= data.service.target %>
+PIDFile=/var/run/<%= data.service.name %>.pid
+Environment="NODE_ENV=production"
+<% if (data.service.user) { %>
+User=<%= data.service.user %>
+<% } %>
+<% if (data.service.group) { %>
+Group=<%= data.service.group %>
+<% } %>
+
+[Install]
+WantedBy=multi-user.target
