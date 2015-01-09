@@ -1,11 +1,10 @@
 var gulp = require('gulp');
 var path = require('path');
+var util = require('util');
 var rimraf = require('rimraf');
 var mkdirp = require('mkdirp');
 var through = require('through2');
 var brass = require('./index');
-var util = require('util');
-
 
 var options = {
     type: 'rpm',
@@ -51,6 +50,20 @@ gulp.task('rpm-files', [ 'rpm-setup' ], function () {
     .pipe(rpm.files());
 });
 
+gulp.task('rpm-binaries', [ 'rpm-files' ], function () {
+    return gulp.src(path.join(rpm.buildRoot, '/usr/lib/theapp/bin/theapp'))
+    .pipe(brass.util.symlink([
+        path.join(rpm.buildRoot, '/usr/bin/theapp'),
+        path.join(rpm.buildRoot, '/usr/sbin/theapp')
+    ]))
+    .pipe(rpm.files())
+    .pipe(through.obj(function (file, enc, callback) {
+        console.log(file.path);
+        console.log(rpm.options.specFileList);
+        callback(null, file);
+    }));
+});
+
 gulp.task('rpm-service', [ 'rpm-setup' ], function () {
     return gulp.src(brass.util.assets('service/systemd'))
     .pipe(brass.util.template(options.service))
@@ -72,9 +85,9 @@ gulp.task('rpm-spec', [ 'rpm-files' ], rpm.specTask());
 //     .pipe(rpm.build());
 // });
 
-gulp.task('rpm-build', [ 'rpm-setup', 'rpm-files', 'rpm-service', 'rpm-spec' ], rpm.buildTask());
+gulp.task('rpm-build', [ 'rpm-setup', 'rpm-files', 'rpm-binaries', 'rpm-service', 'rpm-spec' ], rpm.buildTask());
 
-gulp.task('build', [ 'rpm-setup', 'rpm-files', 'rpm-spec', 'rpm-service', 'rpm-build' ], function () {
+gulp.task('build', [ 'rpm-build' ], function () {
     console.log('build finished');
 });
 
