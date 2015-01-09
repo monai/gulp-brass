@@ -2,7 +2,6 @@ var gulp = require('gulp');
 var path = require('path');
 var rimraf = require('rimraf');
 var mkdirp = require('mkdirp');
-var symlink = require('gulp-symlink');
 var through = require('through2');
 var brass = require('./index');
 var util = require('util');
