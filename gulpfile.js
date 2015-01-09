@@ -12,10 +12,7 @@ var options = {
     workDir: '.',
     name: 'theapp',
     version: '0.0.1',
-    release: 1,
     license: 'ISC',
-    group: 'Applications/Internet',
-    source: 'theapp-0.0.1.tgz',
     summary: 'The App',
     description: 'This is the application'
 };
