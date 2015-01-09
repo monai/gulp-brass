@@ -59,13 +59,4 @@ BuildRequires: systemd
 # rm -rf %{sourcedir}/*
 
 %files
-{{#equal service.type 'systemv'}}
-/etc/init.d/*
-{{/equal}}
-{{#equal service.type 'systemd'}}
-/lib/systemd/system/*
-{{/equal}}
-{{#equal service.type 'upstart'}}
-/etc/init/*
-{{/equal}}
 {{specFileList}}
