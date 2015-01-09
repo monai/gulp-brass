@@ -1,0 +1,31 @@
+{
+  "name": "gulp-brass",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/monai/gulp-brass.git"
+  },
+  "author": "monai",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/monai/gulp-brass/issues"
+  },
+  "homepage": "https://github.com/monai/gulp-brass",
+  "dependencies": {
+    "async": "^0.9.0",
+    "dezalgo": "^1.0.1",
+    "graceful-fs": "^3.0.5",
+    "gulp": "^3.8.10",
+    "gulp-util": "^3.0.2",
+    "handlebars": "^2.0.0",
+    "lodash": "^2.4.1",
+    "mkdirp": "^0.5.0",
+    "rimraf": "^2.2.8",
+    "through2": "^0.6.3"
+  }
+}
