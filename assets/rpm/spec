@@ -1,67 +1,71 @@
-%define _topdir <%= data.buildDir %>
-%define _base   <%= data.name %>
+%define _topdir {{buildDir}}
+%define _base   {{name}}
 
-Summary:        <%= data.summary %>
-Name:           <%= data.name %>
-Version:        <%= data.version %>
-Release:        <%= data.release %>
-License:        <%= data.license %>
-Group:          <%= data.group %>
-Source:         <%= data.source %>
-<% if ('url' in data)          { %>URL:            <%= url            %><% } %>
-<% if ('distribution' in data) { %>Distribution:   <%= distribution   %><% } %>
-<% if ('vendor' in data)       { %>Vendor:         <%= vendor         %><% } %>
-<% if ('packager' in data)     { %>Packager:       <%= packager       %><% } %>
+Summary:        {{summary}}
+Name:           {{name}}
+Version:        {{version}}
+Release:        {{release}}
+License:        {{license}}
+Group:          {{group}}
+Source:         {{source}}
+{{#if url         }}URL:            {{url         }}{{/if}}
+{{#if distribution}}Distribution:   {{distribution}}{{/if}}
+{{#if vendor      }}Vendor:         {{vendor      }}{{/if}}
+{{#if packager    }}Packager:       {{packager    }}{{/if}}
 Autoreq:        0
 
 %description
-<%= data.description %>
+{{description}}
 
-<% if (data.service && data.service.type == 'sysv') { %>
+{{#equal service.type 'systemv'}}
 Requires(post): chkconfig
 Requires(preun): chkconfig
 Requires(preun): initscripts
 Requires(postun): initscripts
 
 %post
-/sbin/chkconfig --add <%= service.name %>
+/sbin/chkconfig --add {{service.name}}
 
 %preun
 if [ $1 -eq 0 ]; then
-    /sbin/service <%= service.name %> stop >/dev/null 2>&1 || true
-    /sbin/chkconfig --del <%= service.name %>
+    /sbin/service {{service.name}} stop >/dev/null 2>&1 || true
+    /sbin/chkconfig --del {{service.name}}
 fi
 
 %postun
 if [ $1 -ge 1 ]; then
-    /sbin/service <%= service.name %> condrestart >/dev/null 2>&1 || true
+    /sbin/service {{service.name}} condrestart >/dev/null 2>&1 || true
 fi
-<% } else if (data.service && data.service.type == 'systemd') { %>
+{{/equal}}
+
+{{#equal service.type 'systemd'}}
 Requires(post): systemd
 Requires(preun): systemd
 Requires(postun): systemd
 BuildRequires: systemd
 
 %post
-%systemd_post <%= service.name %>.service
+%systemd_post {{service.name}}.service
 
 %preun
-%systemd_preun <%= service.name %>.service
+%systemd_preun {{service.name}}.service
 
 %postun
-%systemd_postun_with_restart <%= service.name %>.service 
-<% } %>
+%systemd_postun_with_restart {{service.name}}.service 
+{{/equal}}
 
 %clean
 # rm -rf %{buildroot}
 # rm -rf %{sourcedir}/*
 
 %files
-<% if (data.service && data.service.type == 'sysv') { %>
+{{#equal service.type 'systemv'}}
 /etc/init.d/*
-<% } else if (data.service && data.service.type == 'systemd') { %>
+{{/equal}}
+{{#equal service.type 'systemd'}}
 /lib/systemd/system/*
-<% } else if (data.service && data.service.type == 'upstart') { %>
+{{/equal}}
+{{#equal service.type 'upstart'}}
 /etc/init/*
-<% } %>
-<%= data.specFileList %>
+{{/equal}}
+{{specFileList}}

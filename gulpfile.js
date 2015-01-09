@@ -6,7 +6,8 @@ var through = require('through2');
 var brass = require('./index');
 var util = require('util');
 
-var rpm = brass.create({
+
+var options = {
     type: 'rpm',
     workDir: '.',
     name: 'theapp',
@@ -17,7 +18,18 @@ var rpm = brass.create({
     source: 'theapp-0.0.1.tgz',
     summary: 'The App',
     description: 'This is the application'
-});
+};
+
+options.service = {
+    type: 'systemd',
+    name: options.name,
+    description: options.description,
+    target: '/usr/lib/theapp/bin/theapp',
+    user: 'vagrant',
+    group: 'vagrant'
+};
+
+var rpm = brass.create(options);
 
 gulp.task('clean', function () {
     return gulp.src(rpm.buildDir, { read: false })
@@ -43,17 +55,9 @@ gulp.task('rpm-files', [ 'rpm-setup' ], function () {
 });
 
 gulp.task('rpm-service', [ 'rpm-setup' ], function () {
-    var systemd = brass.service.create({
-        type: 'systemd',
-        name: 'theapp',
-        description: rpm.options.description,
-        target: '/usr/lib/theapp/bin/theapp',
-        user: 'vagrant',
-        group: 'vagrant'
-    });
-    
     return gulp.src(brass.util.assets('service/systemd'))
-    .pipe(systemd.file())
+    .pipe(brass.util.template(options.service))
+    .pipe(brass.util.rename(options.service.name +'.service'))
     .pipe(gulp.dest(path.join(rpm.buildRoot, '/lib/systemd/system')))
     .pipe(rpm.files());
 });
