@@ -7,7 +7,7 @@ Version:        {{version}}
 Release:        {{release}}
 License:        {{license}}
 Group:          {{group}}
-Source:         {{source}}
+{{#if source      }}Source:         {{source      }}{{/if}}
 {{#if url         }}URL:            {{url         }}{{/if}}
 {{#if distribution}}Distribution:   {{distribution}}{{/if}}
 {{#if vendor      }}Vendor:         {{vendor      }}{{/if}}
