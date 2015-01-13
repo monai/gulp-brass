@@ -64,7 +64,11 @@ gulp.task('rpm-binaries', [ 'rpm-files' ], function () {
         path.join(rpm.buildRoot, '/usr/bin/theapp'),
         path.join(rpm.buildRoot, '/usr/sbin/theapp')
     ]))
-    .pipe(rpm.files());
+    .pipe(rpm.files({
+        user: 'root',
+        group: 'root',
+        mode: '775'
+    }));
 });
 
 // gulp.task('rpm-spec', [ 'rpm-files' ], function () {
