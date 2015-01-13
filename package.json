@@ -1,8 +1,11 @@
 {
   "name": "gulp-brass",
   "version": "0.0.0",
-  "description": "",
+  "description": "Build RPM package",
   "main": "index.js",
+  "keywords": [
+    "rpm", "deb", "gulpplugin"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

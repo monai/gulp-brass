@@ -1,6 +1,7 @@
 node_modules
 brass_build
 tmp
-.vagrant
 .npmignore
+.travis.yml
+.vagrant
 *.tgz
