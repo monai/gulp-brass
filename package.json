@@ -1,13 +1,13 @@
 {
   "name": "gulp-brass",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Build RPM package",
   "main": "index.js",
   "keywords": [
     "rpm", "deb", "gulpplugin"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 0"
   },
   "repository": {
     "type": "git",
@@ -23,7 +23,6 @@
     "async": "^0.9.0",
     "dezalgo": "^1.0.1",
     "graceful-fs": "^3.0.5",
-    "gulp": "^3.8.10",
     "gulp-rename": "^1.2.0",
     "gulp-util": "^3.0.2",
     "handlebars": "^2.0.0",

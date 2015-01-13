@@ -87,11 +87,7 @@ gulp.task('rpm-binaries', [ 'rpm-files' ], function () {
     .pipe(brass.util.symlink([
         path.join(rpm.buildRoot, '/usr/sbin/theapp')
     ]))
-    .pipe(rpm.files({
-        user: 'root',
-        group: 'root',
-        mode: '775'
-    }));
+    .pipe(rpm.files());
 });
 
 // gulp.task('rpm-spec', [ 'rpm-files' ], function () {

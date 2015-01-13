@@ -27,17 +27,17 @@ A shorthand for `rpm.spec()` stream.
 
 #### rpm.buildTask()
 
-Runs `rpm-build` against all spec files in `rpm.buildDir_SPECS` directory.
+Runs `rpmbuild` against all spec files in `rpm.buildDir_SPECS` directory.
 
 ### Streams
 
 #### rpm.setup()
 
-Creates directory structure required by `rpm-build`. Use `rpm.setupTask()` task instead.
+Creates directory structure required by `rpmbuild`. Use `rpm.setupTask()` task instead.
 
 #### rpm.files(options)
 
-Registers packaged files for later use in spec file. Always use after `gulp.dest()`.
+It registers files and aplies options which will be inlined in spec file. All packaged files must be piped to this stream. Always pipe after `gulp.dest()`.
 
 Options:
 
@@ -59,10 +59,10 @@ Renders default spec file. Populates `rpm.options` with `rpm.renderFileList()` o
 
 #### rpm.build()
 
-Runs `rpm-build` against piped spec files.
+Runs `rpmbuild` against piped spec files.
 
 ### Methods
 
 #### rpm.renderFileList()
 
-Returns file list string to use in `%files` section in spec file.
+Returns registered files list with inlined attributes as string to be used in `%files` section in spec file.
