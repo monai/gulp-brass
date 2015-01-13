@@ -1,6 +1,5 @@
 node_modules
 brass_build
 tmp
-.npmignore
 .vagrant
 *.tgz
