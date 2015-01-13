@@ -17,7 +17,7 @@ centos70() {
 }
 
 centos() {
-    yum install -y -q nodejs npm
+    yum install -y -q nodejs npm mc vim
 }
 
 trusty64() {
