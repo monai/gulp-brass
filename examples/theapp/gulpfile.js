@@ -1,6 +1,9 @@
+var dz = require('dezalgo');
 var gulp = require('gulp');
 var path = require('path');
 var util = require('util');
+var exec = require('child_process').exec;
+var async = require('async');
 var rimraf = require('rimraf');
 var mkdirp = require('mkdirp');
 var through = require('through2');
@@ -10,7 +13,7 @@ var options = {
     type: 'rpm',
     workDir: '.',
     name: 'theapp',
-    version: '0.0.1',
+    version: '0.0.0',
     license: 'ISC',
     summary: 'The App',
     description: 'This is the application'
@@ -35,17 +38,38 @@ gulp.task('clean', function () {
     }));
 });
 
-gulp.task('rpm-setup', [  'clean' ], rpm.setupTask());
+gulp.task('rpm-setup', [ 'clean' ], rpm.setupTask());
 
-gulp.task('rpm-files', [ 'rpm-setup' ], function () {
+gulp.task('npm-pack', [ 'rpm-setup' ], function (callback) {
+    async.series([
+        function (callback) {
+            exec('npm pack', callback);
+        }, function (callback) {
+            var archive;
+            
+            archive = options.name +'-'+ options.version +'.tgz';
+            archive = path.resolve(rpm.buildDir_SOURCES, path.join(process.cwd(), archive));
+            
+            exec('tar xvzf '+ archive, { cwd: rpm.buildDir_SOURCES }, callback);
+        }, function (callback) {
+            exec('npm install', {
+                env: { NODE_ENV: 'production' },
+                cwd: path.join(rpm.buildDir_SOURCES, 'package')
+            }, callback);
+        }
+    ], dz(callback));
+});
+
+gulp.task('rpm-files', [ 'rpm-setup', 'npm-pack' ], function () {
+    var sources = path.relative(process.cwd(), rpm.buildDir_SOURCES);
     return gulp.src([
-        '*',
-        'bin/**/*',
-        'assets/**/*',
-        'node_modules/**/*',
-        '!config',
-        '!var',
-    ], { mark: true, base: '.' })
+        sources +'/package/*',
+        sources +'/package/bin/**/*',
+        sources +'/package/assets/**/*',
+        sources +'/package/node_modules/**/*',
+        '!'+ sources +'/package/config',
+        '!'+ sources +'/package/var',
+    ], { mark: true, base: sources +'/package' })
     .pipe(gulp.dest(path.join(rpm.buildRoot, '/usr/lib/theapp')))
     .pipe(rpm.files());
 });
@@ -61,7 +85,6 @@ gulp.task('rpm-service', [ 'rpm-setup' ], function () {
 gulp.task('rpm-binaries', [ 'rpm-files' ], function () {
     return gulp.src(path.join(rpm.buildRoot, '/usr/lib/theapp/bin/theapp'))
     .pipe(brass.util.symlink([
-        path.join(rpm.buildRoot, '/usr/bin/theapp'),
         path.join(rpm.buildRoot, '/usr/sbin/theapp')
     ]))
     .pipe(rpm.files({
@@ -84,7 +107,7 @@ gulp.task('rpm-spec', [ 'rpm-files', 'rpm-binaries' ], rpm.specTask());
 //     .pipe(rpm.build());
 // });
 
-gulp.task('rpm-build', [ 'rpm-setup', 'rpm-files', 'rpm-binaries', 'rpm-service', 'rpm-spec' ], rpm.buildTask());
+gulp.task('rpm-build', [ 'rpm-setup', 'npm-pack', 'rpm-files', 'rpm-binaries', 'rpm-service', 'rpm-spec' ], rpm.buildTask());
 
 gulp.task('build', [ 'rpm-build' ], function () {
     console.log('build finished');

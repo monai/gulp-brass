@@ -13,6 +13,8 @@
     "connect": "^3.3.4"
   },
   "devDependencies": {
+    "async": "^0.9.0",
+    "dezalgo": "^1.0.1",
     "mkdirp": "^0.5.0",
     "rimraf": "^2.2.8",
     "through2": "^0.6.3"
