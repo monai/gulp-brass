@@ -10,37 +10,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "connect": "^3.1.0"
+    "connect": "^3.3.4"
   },
-  "brass": {
-    "type": "deb",
-    "service": {
-      "type": "upstart",
-      "name": "theapp",
-      "target": "bin/theapp",
-      "user": "vagrant"
-    },
-    "files": [
-      {
-        "target": "/var",
-        "files": "**/*",
-        "cwd": "var",
-        "type": "config"
-      },
-      {
-        "target": "/etc",
-        "files": "*",
-        "cwd": "config",
-        "type": "config",
-        "noreplace": true,
-        "attr": [ "0777", "root", null ]
-      },
-      "*",
-      "bin/*",
-      "node_modules/**/*",
-      "!config",
-      "!var/"
-    ],
-    "description": "This is the long description of the application."
+  "devDependencies": {
+    "mkdirp": "^0.5.0",
+    "rimraf": "^2.2.8",
+    "through2": "^0.6.3"
   }
 }

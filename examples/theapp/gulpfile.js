@@ -4,7 +4,7 @@ var util = require('util');
 var rimraf = require('rimraf');
 var mkdirp = require('mkdirp');
 var through = require('through2');
-var brass = require('./index');
+var brass = require('../../index');
 
 var options = {
     type: 'rpm',
@@ -39,13 +39,13 @@ gulp.task('rpm-setup', [  'clean' ], rpm.setupTask());
 
 gulp.task('rpm-files', [ 'rpm-setup' ], function () {
     return gulp.src([
-        'package/*',
-        'package/bin/**/*',
-        'package/assets/**/*',
-        'package/node_modules/**/*',
-        '!package/config',
-        '!package/var',
-    ], { mark: true, base: 'package' })
+        '*',
+        'bin/**/*',
+        'assets/**/*',
+        'node_modules/**/*',
+        '!config',
+        '!var',
+    ], { mark: true, base: '.' })
     .pipe(gulp.dest(path.join(rpm.buildRoot, '/usr/lib/theapp')))
     .pipe(rpm.files());
 });
