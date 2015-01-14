@@ -17,11 +17,12 @@ pkg = require('./package.json');
 options = npm.getOptions(pkg);
 options.type = 'rpm';
 options.workDir = '.';
+options.target = '/usr/lib/'+ options.name;
 options.service = {
     type: 'systemd',
     name: options.name,
     description: options.description,
-    target: '/usr/lib/theapp/bin/theapp',
+    target: options.target +'/bin/theapp',
     user: 'vagrant',
     group: 'vagrant'
 };
@@ -51,33 +52,16 @@ gulp.task('rpm-files', [ 'rpm-setup', 'npm-source' ], function () {
     ], rpm.buildDir_BUILD);
     
     return gulp.src(globs, { mark: true, base: rpm.buildDir_BUILD })
-    .pipe(gulp.dest(path.join(rpm.buildRoot, '/usr/lib/theapp')))
+    .pipe(gulp.dest(path.join(rpm.buildRoot, options.target)))
     .pipe(rpm.files());
 });
 
 gulp.task('rpm-service', [ 'rpm-setup' ], npm.serviceTask(rpm));
 
-gulp.task('rpm-binaries', [ 'rpm-files' ], function () {
-    return gulp.src(path.join(rpm.buildRoot, '/usr/lib/theapp/bin/theapp'))
-    .pipe(brass.util.symlink([
-        path.join(rpm.buildRoot, '/usr/sbin/theapp')
-    ]))
-    .pipe(rpm.files());
-});
-
-// gulp.task('rpm-spec', [ 'rpm-files' ], function () {
-//     return gulp.src(brass.util.assets('rpm/spec'))
-//     .pipe(rpm.spec())
-//     .pipe(gulp.dest(rpm.buildDir_SPECS));
-// });
+gulp.task('rpm-binaries', [ 'rpm-files' ], npm.binariesTask(pkg, rpm));
 
 gulp.task('rpm-spec', [ 'rpm-files', 'rpm-binaries' ], rpm.specTask());
  
-// gulp.task('rpm-build', [ 'rpm-setup', 'rpm-files', 'rpm-spec' ], function () {
-//     return gulp.src(path.join(rpm.buildDir_SPECS, '*'), { read: false })
-//     .pipe(rpm.build());
-// });
-
 gulp.task('rpm-build', [ 'rpm-setup', 'npm-source', 'rpm-files', 'rpm-binaries', 'rpm-service', 'rpm-spec' ], rpm.buildTask());
 
 gulp.task('build', [ 'rpm-build' ], function () {
