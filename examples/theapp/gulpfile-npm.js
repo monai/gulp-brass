@@ -9,7 +9,7 @@ var rimraf = require('rimraf');
 var mkdirp = require('mkdirp');
 var through = require('through2');
 var brass = require('../../index');
-var npm = require('../../../gulp-brass-npm');
+var npm = require('gulp-brass-npm');
 
 var pkg, options;
 
