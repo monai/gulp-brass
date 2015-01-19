@@ -1,11 +1,8 @@
-var dz = require('dezalgo');
 var gulp = require('gulp');
 var path = require('path');
-var util = require('util');
 var exec = require('child_process').exec;
 var async = require('async');
 var rimraf = require('rimraf');
-var mkdirp = require('mkdirp');
 var through = require('through2');
 var brass = require('../../index');
 
@@ -57,11 +54,11 @@ gulp.task('npm-pack', [ 'rpm-setup' ], function (callback) {
                 cwd: path.join(rpm.buildDir_SOURCES, 'package')
             }, callback);
         }
-    ], dz(callback));
+    ], callback);
 });
 
 gulp.task('rpm-files', [ 'rpm-setup', 'npm-pack' ], function () {
-    var sources = path.relative(process.cwd(), rpm.buildDir_SOURCES);
+    var sources = path.relative(process.cwd(), rpm.buildDir_BUILD);
     return gulp.src([
         sources +'/package/*',
         sources +'/package/bin/**/*',
