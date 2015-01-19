@@ -12,20 +12,17 @@ var pkg, options, rpm;
 
 pkg = require('./package.json');
 options = npm.getOptions(pkg);
-options = assign(npm.getOptions(pkg), {
-    type: 'rpm',
-    workDir: '.',
-    target: '/usr/lib/'+ options.name,
-    service: {
-        type: 'systemd',
-        name: options.name,
-        description: options.description,
-        target: options.target +'/bin/theapp',
-        user: 'vagrant',
-        group: 'vagrant'
-    }
-});
-
+options.type = 'rpm';
+options.workDir = '.';
+options.target = '/usr/lib/'+ options.name;
+options.service = {
+    type: 'systemd',
+    name: options.name,
+    description: options.description,
+    target: options.target +'/bin/theapp',
+    user: 'vagrant',
+    group: 'vagrant'
+};
 rpm = brass.create(options);
 
 gulp.task('clean', function () {
