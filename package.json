@@ -1,6 +1,6 @@
 {
   "name": "gulp-brass",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Build RPM package",
   "main": "index.js",
   "keywords": [
