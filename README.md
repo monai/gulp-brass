@@ -12,6 +12,7 @@ Check out self explanatory [example](/examples/theapp/gulpfile.js).
 ##RPM
 
 ```js
+var brass = require('gulp-brass');
 var rpm = brass.create(options);
 ```
 
@@ -66,3 +67,7 @@ Runs `rpmbuild` against piped spec files.
 #### rpm.renderFileList()
 
 Returns registered files list with inlined attributes as string to be used in `%files` section in spec file.
+
+## License
+
+ISC
