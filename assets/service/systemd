@@ -4,7 +4,7 @@ Requires=network.target
 After=network.target
 
 [Service]
-ExecStart={{target}}
+ExecStart={{exec}}
 PIDFile=/var/run/{{name}}.pid
 Environment="NODE_ENV=production"
 

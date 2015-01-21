@@ -3,3 +3,4 @@ brass_build
 tmp
 .vagrant
 *.tgz
+npm-debug.log

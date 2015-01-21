@@ -3,3 +3,4 @@ node_modules
 *.tgz
 .npmignore
 gulpfile.js
+gulpfile-npm.js

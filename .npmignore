@@ -7,3 +7,4 @@ tools
 .npmignore
 .travis.yml
 Vagrantfile
+npm-debug.log

@@ -22,7 +22,7 @@
 # Source function library.
 . /etc/init.d/functions
 
-exec="{{target}}"
+exec="{{exec}}"
 prog="{{name}}"
 {{#if user}}
 user="{{user}}"

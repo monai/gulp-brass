@@ -2,7 +2,6 @@ var gulp = require('gulp');
 var path = require('path');
 var exec = require('child_process').exec;
 var async = require('async');
-var assign = require('lodash.assign');
 var rimraf = require('rimraf');
 var through = require('through2');
 var brass = require('../../index');
@@ -14,12 +13,12 @@ pkg = require('./package.json');
 options = npm.getOptions(pkg);
 options.type = 'rpm';
 options.workDir = '.';
-options.target = '/usr/lib/'+ options.name;
+options.installDir = '/usr/lib/'+ options.name;
 options.service = {
     type: 'systemd',
     name: options.name,
     description: options.description,
-    target: options.target +'/bin/theapp',
+    exec: '/usr/bin/theapp',
     user: 'vagrant',
     group: 'vagrant'
 };
@@ -47,7 +46,7 @@ gulp.task('files', [ 'setup', 'source' ], function () {
     ], rpm.buildDir_BUILD);
     
     return gulp.src(globs, { mark: true, base: rpm.buildDir_BUILD })
-    .pipe(gulp.dest(path.join(rpm.buildRoot, options.target)))
+    .pipe(gulp.dest(path.join(rpm.buildRoot, options.installDir)))
     .pipe(rpm.files());
 });
 
