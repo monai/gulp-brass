@@ -13,7 +13,7 @@ pkg = require('./package.json');
 options = npm.getOptions(pkg);
 options.type = 'rpm';
 options.workDir = '.';
-options.target = '/usr/lib/'+ options.name;
+options.installDir = '/usr/lib/'+ options.name;
 options.service = {
     type: 'systemd',
     name: options.name,
@@ -46,7 +46,7 @@ gulp.task('files', [ 'setup', 'source' ], function () {
     ], rpm.buildDir_BUILD);
     
     return gulp.src(globs, { mark: true, base: rpm.buildDir_BUILD })
-    .pipe(gulp.dest(path.join(rpm.buildRoot, options.target)))
+    .pipe(gulp.dest(path.join(rpm.buildRoot, options.installDir)))
     .pipe(rpm.files());
 });
 
