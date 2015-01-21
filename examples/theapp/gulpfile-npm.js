@@ -18,7 +18,7 @@ options.service = {
     type: 'systemd',
     name: options.name,
     description: options.description,
-    target: options.target +'/bin/theapp',
+    exec: '/usr/bin/theapp',
     user: 'vagrant',
     group: 'vagrant'
 };
