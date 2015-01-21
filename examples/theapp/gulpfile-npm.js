@@ -2,7 +2,6 @@ var gulp = require('gulp');
 var path = require('path');
 var exec = require('child_process').exec;
 var async = require('async');
-var assign = require('lodash.assign');
 var rimraf = require('rimraf');
 var through = require('through2');
 var brass = require('../../index');
