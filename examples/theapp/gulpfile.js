@@ -47,12 +47,12 @@ gulp.task('npm-pack', [ 'rpm-setup' ], function (callback) {
             archive = options.name +'-'+ options.version +'.tgz';
             archive = path.resolve(rpm.buildDir_SOURCES, path.join(process.cwd(), archive));
             
-            exec('tar xvzf '+ archive, { cwd: rpm.buildDir_SOURCES }, callback);
+            exec('tar xvzf '+ archive, { cwd: rpm.buildDir_BUILD }, callback);
         }, function (callback) {
             process.env['NODE_ENV'] = 'production';
             exec('npm install', {
                 env: process.env,
-                cwd: path.join(rpm.buildDir_SOURCES, 'package')
+                cwd: path.join(rpm.buildDir_BUILD, 'package')
             }, callback);
         }
     ], callback);
