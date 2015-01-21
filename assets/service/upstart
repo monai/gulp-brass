@@ -14,4 +14,4 @@ setuid {{user}}
 setgid {{group}}
 {{/if}}
 
-exec {{target}}
+exec {{exec}}
