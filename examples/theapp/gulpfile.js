@@ -20,7 +20,7 @@ options.service = {
     type: 'systemd',
     name: options.name,
     description: options.description,
-    target: '/usr/lib/theapp/bin/theapp',
+    exec: '/usr/bin/theapp',
     user: 'vagrant',
     group: 'vagrant'
 };
@@ -49,8 +49,9 @@ gulp.task('npm-pack', [ 'rpm-setup' ], function (callback) {
             
             exec('tar xvzf '+ archive, { cwd: rpm.buildDir_SOURCES }, callback);
         }, function (callback) {
+            process.env['NODE_ENV'] = 'production';
             exec('npm install', {
-                env: { NODE_ENV: 'production' },
+                env: process.env,
                 cwd: path.join(rpm.buildDir_SOURCES, 'package')
             }, callback);
         }
