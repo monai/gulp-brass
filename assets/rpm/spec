@@ -13,6 +13,7 @@ Group:          {{group}}
 {{#if vendor      }}Vendor:         {{vendor      }}{{/if}}
 {{#if packager    }}Packager:       {{packager    }}{{/if}}
 Autoreq:        0
+AutoReqProv:    0
 
 %description
 {{description}}
