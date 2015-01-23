@@ -3,7 +3,6 @@ var path = require('path');
 var exec = require('child_process').exec;
 var async = require('async');
 var rimraf = require('rimraf');
-var through = require('through2');
 var brass = require('../../index');
 
 var options = {
@@ -29,7 +28,7 @@ var rpm = brass.create(options);
 
 gulp.task('clean', function () {
     return gulp.src(rpm.buildDir, { read: false })
-    .pipe(through.obj(function (file, enc, callback) {
+    .pipe(brass.util.stream(function (file, callback) {
         this.push(file);
         rimraf(file.path, callback);
     }));
