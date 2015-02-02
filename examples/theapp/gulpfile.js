@@ -58,15 +58,16 @@ gulp.task('npm-pack', [ 'rpm-setup' ], function (callback) {
 });
 
 gulp.task('rpm-files', [ 'rpm-setup', 'npm-pack' ], function () {
-    var sources = path.relative(process.cwd(), rpm.buildDir_BUILD);
-    return gulp.src([
-        sources +'/package/*',
-        sources +'/package/bin/**/*',
-        sources +'/package/assets/**/*',
-        sources +'/package/node_modules/**/*',
-        '!'+ sources +'/package/config',
-        '!'+ sources +'/package/var',
-    ], { mark: true, base: sources +'/package' })
+    var globs = brass.util.prefix([
+        'package/*',
+        'package/bin/**/*',
+        'package/assets/**/*',
+        'package/node_modules/**/*',
+        '!pacakge/config',
+        '!pacakge/var',
+    ], rpm.buildDir_BUILD);
+    
+    return gulp.src(globs, { mark: true, base: rpm.buildDir_BUILD })
     .pipe(gulp.dest(path.join(rpm.buildRoot, '/usr/lib/theapp')))
     .pipe(rpm.files());
 });
