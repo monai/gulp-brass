@@ -3,6 +3,14 @@
   "version": "0.0.6",
   "description": "Build RPM package",
   "main": "index.js",
+  "files": [
+    "assets",
+    "examples",
+    "lib",
+    "index.js",
+    "package.json",
+    "README.md"
+  ],
   "keywords": [
     "rpm", "deb", "gulpplugin"
   ],
