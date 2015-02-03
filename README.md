@@ -36,23 +36,9 @@ Runs `rpmbuild` against all spec files in `rpm.buildDir_SPECS` directory.
 
 Creates directory structure required by `rpmbuild`. Use `rpm.setupTask()` task instead.
 
-#### rpm.files(options)
+#### rpm.files()
 
-It registers files and aplies options which will be inlined in spec file. All packaged files must be piped to this stream. Always pipe after `gulp.dest()`.
-
-Options:
-
-```js
-{
-    user: 'root',
-    group: 'root',
-    mode: '0644',
-    config: false,
-    noreplace: false
-}
-```
-
-All options are optional.
+It registers files to be listed in spec file. All packaged files must be piped to this stream. Always pipe after `gulp.dest()`.
 
 #### rpm.spec()
 
