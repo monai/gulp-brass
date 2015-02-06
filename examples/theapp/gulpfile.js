@@ -26,25 +26,22 @@ options.service = {
 
 var rpm = brass.create(options);
 
-gulp.task('clean', function () {
-    return gulp.src(rpm.buildDir, { read: false })
-    .pipe(brass.util.stream(function (file, callback) {
-        this.push(file);
-        rimraf(file.path, callback);
-    }));
+gulp.task('clean', function (callback) {
+    rimraf(rpm.buildDir, callback);
 });
 
 gulp.task('rpm-setup', [ 'clean' ], rpm.setupTask());
 
 gulp.task('npm-pack', [ 'rpm-setup' ], function (callback) {
+    var cwd = process.cwd();
     async.series([
         function (callback) {
-            exec('npm pack', callback);
+            exec('npm pack '+ cwd, { cwd: rpm.buildDir_SOURCES }, callback);
         }, function (callback) {
             var archive;
             
             archive = options.name +'-'+ options.version +'.tgz';
-            archive = path.resolve(rpm.buildDir_SOURCES, path.join(process.cwd(), archive));
+            archive = path.join(rpm.buildDir_SOURCES, archive);
             
             exec('tar xvzf '+ archive, { cwd: rpm.buildDir_BUILD }, callback);
         }, function (callback) {
