@@ -64,8 +64,18 @@ gulp.task('rpm-files', [ 'rpm-setup', 'npm-pack' ], function () {
         '!pacakge/var',
     ], rpm.buildDir_BUILD);
     
-    return gulp.src(globs, { mark: true, base: rpm.buildDir_BUILD })
+    return gulp.src(globs, { mark: true, base: path.join(rpm.buildDir_BUILD, 'package') })
     .pipe(gulp.dest(path.join(rpm.buildRoot, '/usr/lib/theapp')))
+    // .pipe(brass.util.stream(function (file, callback) {
+    //     var match = file.relative.match('bin/theapp');
+        
+    //     if (match) {
+    //         file.attr = [ '0775', 'vagrant', 'vagrant' ];
+    //     }
+        
+    //     this.push(file);
+    //     callback();
+    // }))
     .pipe(rpm.files());
 });
 
@@ -79,9 +89,7 @@ gulp.task('rpm-service', [ 'rpm-setup' ], function () {
 
 gulp.task('rpm-binaries', [ 'rpm-files' ], function () {
     return gulp.src(path.join(rpm.buildRoot, '/usr/lib/theapp/bin/theapp'))
-    .pipe(brass.util.symlink([
-        path.join(rpm.buildRoot, '/usr/sbin/theapp')
-    ]))
+    .pipe(brass.util.symlink(path.join(rpm.buildRoot, '/usr/bin/theapp')))
     .pipe(rpm.files());
 });
 
