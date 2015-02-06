@@ -98,6 +98,16 @@ If name is an array, it iterates to next name with each file.
 If `options.deep == true`, makes symlink for each name to each file.
 This is convenient when you need to have few symlinks to same file.
 
+## Vinyl extensions
+
+`rpm.renderFileList()` uses some vinyl file object extensions:
+
+- `file.attr = [ mode, user, group ]`, eg. `[ '0777', 'apache', 'apache' ]`
+- `file.config = true|false` - indicates that file is config file.
+- `file.noreplace = true|false` - sets config file updgrade policy.
+
+More info on `config` and `noreplace` [policy](https://fedoraproject.org/wiki/How_to_create_an_RPM_package#.25files_prefixes).
+
 ## License
 
 ISC
