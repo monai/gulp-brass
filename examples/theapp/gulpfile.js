@@ -33,22 +33,21 @@ gulp.task('clean', function (callback) {
 gulp.task('rpm-setup', [ 'clean' ], rpm.setupTask());
 
 gulp.task('npm-pack', [ 'rpm-setup' ], function (callback) {
-    var cwd = process.cwd();
     async.series([
         function (callback) {
-            exec('npm pack '+ cwd, { cwd: rpm.buildDir_SOURCES }, callback);
+            exec('npm pack '+ rpm.options.cwd, { cwd: rpm.buildDir_SOURCES }, callback);
         }, function (callback) {
             var archive;
             
             archive = options.name +'-'+ options.version +'.tgz';
             archive = path.join(rpm.buildDir_SOURCES, archive);
             
-            exec('tar xvzf '+ archive, { cwd: rpm.buildDir_BUILD }, callback);
+            exec('tar xvzf '+ archive +' --strip-components=1 -C '+ rpm.buildDir_BUILD, callback);
         }, function (callback) {
-            process.env['NODE_ENV'] = 'production';
+            process.env.NODE_ENV = 'production';
             exec('npm install', {
                 env: process.env,
-                cwd: path.join(rpm.buildDir_BUILD, 'package')
+                cwd: rpm.buildDir_BUILD
             }, callback);
         }
     ], callback);
