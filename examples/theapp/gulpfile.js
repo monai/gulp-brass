@@ -54,16 +54,16 @@ gulp.task('npm-pack', [ 'rpm-setup' ], function (callback) {
 });
 
 gulp.task('rpm-files', [ 'rpm-setup', 'npm-pack' ], function () {
-    var globs = brass.util.prefix([
-        'package/*',
-        'package/bin/**/*',
-        'package/assets/**/*',
-        'package/node_modules/**/*',
-        '!pacakge/config',
-        '!pacakge/var',
-    ], rpm.buildDir_BUILD);
+    var globs = [
+        '*',
+        'bin/**/*',
+        'assets/**/*',
+        'node_modules/**/*',
+        '!config',
+        '!var',
+    ];
     
-    return gulp.src(globs, { mark: true, base: path.join(rpm.buildDir_BUILD, 'package') })
+    return gulp.src(globs, { mark: true, cwd: rpm.buildDir_BUILD, base: rpm.buildDir_BUILD })
     .pipe(gulp.dest(path.join(rpm.buildRoot, '/usr/lib/theapp')))
     // .pipe(brass.util.stream(function (file, callback) {
     //     var match = file.relative.match('bin/theapp');
