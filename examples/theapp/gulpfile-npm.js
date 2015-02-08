@@ -11,7 +11,6 @@ var pkg, options, rpm;
 pkg = require('./package.json');
 options = npm.getOptions(pkg);
 options.type = 'rpm';
-options.workDir = '.';
 options.installDir = '/usr/lib/'+ options.name;
 options.service = {
     type: 'systemd',

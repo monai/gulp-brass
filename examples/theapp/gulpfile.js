@@ -7,7 +7,6 @@ var brass = require('../../index');
 
 var options = {
     type: 'rpm',
-    workDir: '.',
     name: 'theapp',
     version: '0.0.0',
     license: 'ISC',
