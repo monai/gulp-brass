@@ -75,16 +75,6 @@ Returns path to internal [asset](/assets). Intended to use with `gulp.src()`.
 Returns simplified [`through2.obj`](https://github.com/rvagg/through2) stream.
 `callback` arguments are `callback(file, callback)`.
 
-### prefix(globs, prefix)
-
-Prefixes `globs` array or string.
-
-Example:
-
-```js
-brass.util.prefix([ 'foo/bar', '!foo/baz' ], 'ok'); // [ 'ok/foo/bar', '!ok/foo/baz' ];
-```
-
 ### template(data)
 
 Returns stream that renders piped vinyl objects as templates with provided `data`.
