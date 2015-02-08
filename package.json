@@ -1,31 +1,11 @@
 {
   "name": "gulp-brass",
-  "version": "0.1.0",
   "description": "Build RPM package",
-  "main": "index.js",
-  "files": [
-    "assets",
-    "lib",
-    "index.js",
-    "package.json",
-    "README.md"
-  ],
-  "keywords": [
-    "rpm", "deb", "gulpplugin"
-  ],
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/monai/gulp-brass.git"
-  },
+  "version": "0.1.1",
   "author": "monai",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/monai/gulp-brass/issues"
   },
-  "homepage": "https://github.com/monai/gulp-brass",
   "dependencies": {
     "async": "^0.9.0",
     "graceful-fs": "^3.0.5",
@@ -36,5 +16,27 @@
     "mkdirp": "^0.5.0",
     "rimraf": "^2.2.8",
     "through2": "^0.6.3"
+  },
+  "files": [
+    "assets",
+    "lib",
+    "index.js",
+    "package.json",
+    "README.md"
+  ],
+  "homepage": "https://github.com/monai/gulp-brass",
+  "keywords": [
+    "rpm",
+    "deb",
+    "gulpplugin"
+  ],
+  "license": "ISC",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/monai/gulp-brass.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 0"
   }
 }
