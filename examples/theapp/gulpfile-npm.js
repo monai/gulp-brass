@@ -35,16 +35,16 @@ gulp.task('setup', [ 'clean' ], rpm.setupTask());
 gulp.task('source', [ 'setup' ], npm.sourceTask(pkg, rpm));
 
 gulp.task('files', [ 'setup', 'source' ], function () {
-    var globs = brass.util.prefix([
+    var globs = [
         '*',
         'bin/**/*',
         'assets/**/*',
         'node_modules/**/*',
         '!config',
         '!var',
-    ], rpm.buildDir_BUILD);
+    ];
     
-    return gulp.src(globs, { mark: true, base: rpm.buildDir_BUILD })
+    return gulp.src(globs, rpm.globOptions)
     .pipe(gulp.dest(path.join(rpm.buildRoot, options.installDir)))
     .pipe(rpm.files());
 });
