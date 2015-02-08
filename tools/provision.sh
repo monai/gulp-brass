@@ -17,7 +17,8 @@ centos70() {
 }
 
 centos() {
-    yum install -y -q nodejs npm mc vim
+    yum install -y -q mc vim nodejs npm rpm-build
+    npm install -g gulp
 }
 
 trusty64() {
@@ -28,7 +29,7 @@ trusty64() {
 }
 
 ubuntu() {
-    true
+    npm install -g gulp
 }
 
 install_epel() {

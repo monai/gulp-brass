@@ -3,7 +3,6 @@ var path = require('path');
 var exec = require('child_process').exec;
 var async = require('async');
 var rimraf = require('rimraf');
-var through = require('through2');
 var brass = require('../../index');
 var npm = require('gulp-brass-npm');
 
@@ -26,7 +25,7 @@ rpm = brass.create(options);
 
 gulp.task('clean', function () {
     return gulp.src([ rpm.buildDir, '*.tgz' ], { read: false })
-    .pipe(through.obj(function (file, enc, callback) {
+    .pipe(brass.util.stream(function (file, callback) {
         this.push(file);
         rimraf(file.path, callback);
     }));
@@ -36,16 +35,16 @@ gulp.task('setup', [ 'clean' ], rpm.setupTask());
 gulp.task('source', [ 'setup' ], npm.sourceTask(pkg, rpm));
 
 gulp.task('files', [ 'setup', 'source' ], function () {
-    var globs = brass.util.prefix([
+    var globs = [
         '*',
         'bin/**/*',
         'assets/**/*',
         'node_modules/**/*',
         '!config',
         '!var',
-    ], rpm.buildDir_BUILD);
+    ];
     
-    return gulp.src(globs, { mark: true, base: rpm.buildDir_BUILD })
+    return gulp.src(globs, rpm.globOptions)
     .pipe(gulp.dest(path.join(rpm.buildRoot, options.installDir)))
     .pipe(rpm.files());
 });

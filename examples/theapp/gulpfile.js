@@ -3,7 +3,6 @@ var path = require('path');
 var exec = require('child_process').exec;
 var async = require('async');
 var rimraf = require('rimraf');
-var through = require('through2');
 var brass = require('../../index');
 
 var options = {
@@ -27,12 +26,8 @@ options.service = {
 
 var rpm = brass.create(options);
 
-gulp.task('clean', function () {
-    return gulp.src(rpm.buildDir, { read: false })
-    .pipe(through.obj(function (file, enc, callback) {
-        this.push(file);
-        rimraf(file.path, callback);
-    }));
+gulp.task('clean', function (callback) {
+    rimraf(rpm.buildDir, callback);
 });
 
 gulp.task('rpm-setup', [ 'clean' ], rpm.setupTask());
@@ -40,35 +35,46 @@ gulp.task('rpm-setup', [ 'clean' ], rpm.setupTask());
 gulp.task('npm-pack', [ 'rpm-setup' ], function (callback) {
     async.series([
         function (callback) {
-            exec('npm pack', callback);
+            exec('npm pack '+ rpm.options.cwd, { cwd: rpm.buildDir_SOURCES }, callback);
         }, function (callback) {
             var archive;
             
             archive = options.name +'-'+ options.version +'.tgz';
-            archive = path.resolve(rpm.buildDir_SOURCES, path.join(process.cwd(), archive));
+            archive = path.join(rpm.buildDir_SOURCES, archive);
             
-            exec('tar xvzf '+ archive, { cwd: rpm.buildDir_BUILD }, callback);
+            exec('tar xvzf '+ archive +' --strip-components=1 -C '+ rpm.buildDir_BUILD, callback);
         }, function (callback) {
-            process.env['NODE_ENV'] = 'production';
+            process.env.NODE_ENV = 'production';
             exec('npm install', {
                 env: process.env,
-                cwd: path.join(rpm.buildDir_BUILD, 'package')
+                cwd: rpm.buildDir_BUILD
             }, callback);
         }
     ], callback);
 });
 
 gulp.task('rpm-files', [ 'rpm-setup', 'npm-pack' ], function () {
-    var sources = path.relative(process.cwd(), rpm.buildDir_BUILD);
-    return gulp.src([
-        sources +'/package/*',
-        sources +'/package/bin/**/*',
-        sources +'/package/assets/**/*',
-        sources +'/package/node_modules/**/*',
-        '!'+ sources +'/package/config',
-        '!'+ sources +'/package/var',
-    ], { mark: true, base: sources +'/package' })
+    var globs = [
+        '*',
+        'bin/**/*',
+        'assets/**/*',
+        'node_modules/**/*',
+        '!config',
+        '!var',
+    ];
+    
+    return gulp.src(globs, rpm.globOptions)
     .pipe(gulp.dest(path.join(rpm.buildRoot, '/usr/lib/theapp')))
+    // .pipe(brass.util.stream(function (file, callback) {
+    //     var match = file.relative.match('bin/theapp');
+        
+    //     if (match) {
+    //         file.attr = [ '0775', 'vagrant', 'vagrant' ];
+    //     }
+        
+    //     this.push(file);
+    //     callback();
+    // }))
     .pipe(rpm.files());
 });
 
@@ -82,9 +88,7 @@ gulp.task('rpm-service', [ 'rpm-setup' ], function () {
 
 gulp.task('rpm-binaries', [ 'rpm-files' ], function () {
     return gulp.src(path.join(rpm.buildRoot, '/usr/lib/theapp/bin/theapp'))
-    .pipe(brass.util.symlink([
-        path.join(rpm.buildRoot, '/usr/sbin/theapp')
-    ]))
+    .pipe(brass.util.symlink(path.join(rpm.buildRoot, '/usr/bin/theapp')))
     .pipe(rpm.files());
 });
 

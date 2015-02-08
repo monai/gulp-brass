@@ -1,8 +1,15 @@
 {
   "name": "gulp-brass",
-  "version": "0.0.6",
+  "version": "0.1.0",
   "description": "Build RPM package",
   "main": "index.js",
+  "files": [
+    "assets",
+    "lib",
+    "index.js",
+    "package.json",
+    "README.md"
+  ],
   "keywords": [
     "rpm", "deb", "gulpplugin"
   ],
@@ -21,9 +28,7 @@
   "homepage": "https://github.com/monai/gulp-brass",
   "dependencies": {
     "async": "^0.9.0",
-    "dezalgo": "^1.0.1",
     "graceful-fs": "^3.0.5",
-    "gulp-rename": "^1.2.0",
     "gulp-util": "^3.0.2",
     "handlebars": "^2.0.0",
     "handlebars-helper-equal": "^1.0.0",
