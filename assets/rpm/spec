@@ -7,7 +7,9 @@ Version:        {{version}}
 Release:        {{release}}
 License:        {{license}}
 {{#if url         }}URL:            {{url         }}{{/if}}
-Autoreq:        0
+
+AutoReq:        0
+AutoProv:       0
 AutoReqProv:    0
 
 %description
