@@ -79,6 +79,20 @@ Returns an options object to be passed to `gulp.src(globs[, options])` when the 
 - `RPMS` contains built RPM file.
 - `RPMS` is not used by gulp-brass.
 
+### rpm.buildRoot
+
+This directory represents root directory on the machine the RPM will be installed to. Hence, all packaged files should be placed to subdirectories of `rpm.buildRoot`.
+
+Example:
+
+File `thefile` upon RPM install will be placed to `/usr/bin/thefile`.
+
+```js
+gulp.src('thefile')
+gulp.pipe(gulp.dest(path.join(rpm.buildRoot, 'usr/bin')))
+gulp.pipe(rpm.files())
+```
+
 ### rpm.setupTask()
 
 Returns gulp task for `rpm.setup()`.
