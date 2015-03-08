@@ -6,7 +6,6 @@ var rimraf = require('rimraf');
 var brass = require('../../index');
 
 var options = {
-    type: 'rpm',
     name: 'theapp',
     version: '0.0.0',
     license: 'ISC',
