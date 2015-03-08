@@ -45,6 +45,28 @@ Other options:
 
 An object that contains merged default option and options passed to `brass.create()`. It can be modified to adjust settings after `brass.create()` was called.
 
+### rpm.globOptions
+
+Returns an options object to be passed to `gulp.src(globs[, options])` when the sources of software being packaged are unpacked to [BUILD directory](#rpmbuilddir). It's value always is:
+
+```js
+{
+  mark: true,
+  cwd: rpm.buildDir_BUILD,
+  base: rpm.buildDir_BUILD
+}
+```
+
+### rpm.buildDir_*
+
+`rpmbuild` uses five special purpose directories in which performs build: SOURCES, SPECS, BUILD, RPMS, SRPMS. See more information on [build directory structure](http://rpm.org/max-rpm-snapshot/ch-rpm-build.html).
+
+- `SOURCES` is not used by gulp-brass.
+- `SPECS` contains SPEC file. `rpm.specTask()` places SPEC file to this directory and `rpm.buildTask()` runs `rpmbuild` against that file. Customized SPEC file also should be placed to this directory.
+- `BUILD` is the directory for unpacked sources and software building. Although it's not necessary to use this directory at all, but it's the place to build or put built software when using one build system for building software, and gulp only for packaging it to RPM.
+- `RPMS` contains built RPM file.
+- `RPMS` is not used by gulp-brass.
+
 ### rpm.setupTask()
 
 Returns gulp task for `rpm.setup()`.
