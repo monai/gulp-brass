@@ -26,7 +26,7 @@ var brass = require('gulp-brass');
 var rpm = brass.create(options);
 ```
 
-Options that represent SPEC file tags (see [more information](http://rpm.org/max-rpm-snapshot/s1-rpm-inside-tags.html)):
+Options that represent SPEC file tags (see [more information on SPEC tags](http://rpm.org/max-rpm-snapshot/s1-rpm-inside-tags.html)):
 
 - `type` (default: `rpm`) - for now only RPM is supported.
 - `name` - name of the software being packaged.
@@ -39,7 +39,19 @@ Options that represent SPEC file tags (see [more information](http://rpm.org/max
 
 Other options:
 
-- `prefix` (default: `/usr`, optional) - prefix where to install binaries. It's used by [gulp-brass-npm](https://github.com/monai/gulp-brass-npm/).
+- `prefix` (default: `/usr`, optional) - prefix where to install binaries. It's not used by gulp-brass but intended to be used by plugins. For example, it's used by [gulp-brass-npm](https://github.com/monai/gulp-brass-npm/).
+
+Service options (see more [information on services](#services)):
+
+- `service.type` - service type, eg: `systemd`, `sysv`, `upstart`.
+- `service.name` - name of the service to be installed.
+- `service.summary` - one-line description of service. Used only by `sysv`.
+- `service.description` - description of service.
+- `service.exec` - command with arguments that are executed when the service is started.
+- `service.user` - user that the service process is executed as.
+- `service.group` - group that the service process is executed as.
+
+This is recommended `service` object structure and it's expected by default service file templates and plugins, eg. [gulp-brass-npm](https://github.com/monai/gulp-brass-npm/).
 
 ### rpm.options
 
@@ -134,6 +146,20 @@ If name is an array, it iterates to next name with each file.
 Options:
 
 - `deep` - if `true`, makes symlink for each name to each piped file. This is convenient when you need to have few symlinks to same file.
+
+## Services
+
+gulp-brass comes with [service file templates](/assets/service) since often packaged software installations run as system services. Service file should be placed to corresponding service file directory and registered as packaged file. gulp task that does these steps may look like this:
+
+```js
+gulp.task('service', [ 'setup' ], function () {
+    return gulp.src(brass.util.assets('service/systemd'))
+    .pipe(brass.util.template(options.service))
+    .pipe(brass.util.rename(options.service.name +'.service'))
+    .pipe(gulp.dest(path.join(rpm.buildRoot, '/lib/systemd/system')))
+    .pipe(rpm.files());
+});
+```
 
 ## Vinyl extensions
 
