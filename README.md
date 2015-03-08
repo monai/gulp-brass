@@ -1,7 +1,7 @@
 # gulp-brass
 
-<!-- [![Build Status](http://img.shields.io/travis/monai/gulp-brass/develop.svg)](https://travis-ci.org/monai/gulp-brass)
-[![NPM Version](http://img.shields.io/npm/v/gulp-brass.svg)](https://www.npmjs.org/package/gulp-brass) -->
+[![Build Status](http://img.shields.io/travis/monai/gulp-brass/develop.svg)](https://travis-ci.org/monai/gulp-brass)
+[![NPM Version](http://img.shields.io/npm/v/gulp-brass.svg)](https://www.npmjs.org/package/gulp-brass)
 
 Build RPM package.
 
@@ -93,18 +93,18 @@ var util = brass.util;
 
 Returns path to internal [asset](/assets). Intended to use with `gulp.src()`.
 
-### stream(callback)
+### util.stream(callback)
 
 Returns simplified [`through2.obj`](https://github.com/rvagg/through2) stream.
 
 Callback arguments are `callback(file, callback)`.
 
-### template(data)
+### util.template(data)
 
 Returns stream that renders piped vinyl objects as templates with provided `data`.
 Uses [handlebars](https://www.npmjs.com/package/handlebars) template engine and [handlebars-helper-equal](https://www.npmjs.com/package/handlebars-helper-equal) helper.
 
-### symlink(name, [options])
+### util.symlink(name, [options])
 
 Returns stream that makes symlinks to `name` path like `$ ln -s target name`.
 If name is an array, it iterates to next name with each file.
