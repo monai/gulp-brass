@@ -11,7 +11,8 @@ var options = {
     version: '0.0.0',
     license: 'ISC',
     summary: 'The App',
-    description: 'This is the application'
+    description: 'This is the application',
+    buildarch: 'noarch'
 };
 
 options.service = {
