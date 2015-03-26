@@ -12,6 +12,7 @@ Group:          {{group}}
 {{#if distribution}}Distribution:   {{distribution}}{{/if}}
 {{#if vendor      }}Vendor:         {{vendor      }}{{/if}}
 {{#if packager    }}Packager:       {{packager    }}{{/if}}
+{{#if buildarch   }}BuildArch:      {{buildarch   }}{{/if}}
 Autoreq:        0
 AutoReqProv:    0
 
