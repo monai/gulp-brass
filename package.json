@@ -1,7 +1,7 @@
 {
   "name": "gulp-brass",
   "description": "Build RPM package",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": "monai",
   "bugs": {
     "url": "https://github.com/monai/gulp-brass/issues"
