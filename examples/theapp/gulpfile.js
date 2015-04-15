@@ -6,7 +6,6 @@ var rimraf = require('rimraf');
 var brass = require('../../index');
 
 var options = {
-    type: 'rpm',
     name: 'theapp',
     version: '0.0.0',
     license: 'ISC',
@@ -99,7 +98,7 @@ gulp.task('rpm-binaries', [ 'rpm-files' ], function () {
 
 gulp.task('rpm-spec', [ 'rpm-files', 'rpm-binaries' ], rpm.specTask());
  
-// gulp.task('rpm-build', [ 'rpm-setup', 'rpm-files', 'rpm-spec' ], function () {
+// gulp.task('rpm-build', [ 'rpm-setup', 'npm-pack', 'rpm-files', 'rpm-binaries', 'rpm-service', 'rpm-spec' ], function () {
 //     return gulp.src(path.join(rpm.buildDir_SPECS, '*'), { read: false })
 //     .pipe(rpm.build());
 // });

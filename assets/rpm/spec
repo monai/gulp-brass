@@ -6,13 +6,10 @@ Name:           {{name}}
 Version:        {{version}}
 Release:        {{release}}
 License:        {{license}}
-Group:          {{group}}
-{{#if source      }}Source:         {{source      }}{{/if}}
 {{#if url         }}URL:            {{url         }}{{/if}}
-{{#if distribution}}Distribution:   {{distribution}}{{/if}}
-{{#if vendor      }}Vendor:         {{vendor      }}{{/if}}
-{{#if packager    }}Packager:       {{packager    }}{{/if}}
-Autoreq:        0
+
+AutoReq:        0
+AutoProv:       0
 AutoReqProv:    0
 
 %description
@@ -52,7 +49,7 @@ BuildRequires: systemd
 %systemd_preun {{service.name}}.service
 
 %postun
-%systemd_postun_with_restart {{service.name}}.service 
+%systemd_postun_with_restart {{service.name}}.service
 {{/equal}}
 
 %clean
