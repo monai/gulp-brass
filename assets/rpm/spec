@@ -5,6 +5,7 @@ Summary:        {{summary}}
 Name:           {{name}}
 Version:        {{version}}
 Release:        {{release}}
+Group:          {{group}}
 License:        {{license}}
 {{#if url         }}URL:            {{url         }}{{/if}}
 
