@@ -10,6 +10,7 @@ var options = {
     version: '0.0.0',
     license: 'ISC',
     summary: 'The App',
+    group: 'gulp-brass example',
     description: 'This is the application'
 };
 
