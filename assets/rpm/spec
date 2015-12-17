@@ -6,6 +6,7 @@ Name:           {{name}}
 Group:          {{group}}
 Version:        {{version}}
 Release:        {{release}}
+Group:          {{group}}
 License:        {{license}}
 {{#if url         }}URL:            {{url         }}{{/if}}
 
