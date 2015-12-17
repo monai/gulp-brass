@@ -3,6 +3,7 @@
 
 Summary:        {{summary}}
 Name:           {{name}}
+Group:          {{group}}
 Version:        {{version}}
 Release:        {{release}}
 License:        {{license}}
