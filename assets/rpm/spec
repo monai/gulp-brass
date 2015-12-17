@@ -7,7 +7,9 @@ Group:          {{group}}
 Version:        {{version}}
 Release:        {{release}}
 License:        {{license}}
-{{#if url         }}URL:            {{url         }}{{/if}}
+{{#if ur}}
+URL:            {{url}}
+{{/if}}
 
 AutoReq:        0
 AutoProv:       0
