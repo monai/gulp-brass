@@ -1,7 +1,6 @@
 var gulp = require('gulp');
 var path = require('path');
 var exec = require('child_process').exec;
-var async = require('async');
 var rimraf = require('rimraf');
 var brass = require('../../index');
 var npm = require('gulp-brass-npm');
@@ -41,7 +40,7 @@ gulp.task('files', [ 'setup', 'source' ], function () {
         '!config',
         '!var',
     ];
-    
+
     return gulp.src(globs, rpm.globOptions)
     .pipe(gulp.dest(path.join(rpm.buildRoot, options.installDir)))
     .pipe(rpm.files());
