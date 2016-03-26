@@ -1,0 +1,29 @@
+{
+  "name": "node-advanced",
+  "version": "1.0.0",
+  "description": "An advanced Node.js service",
+  "main": "server.js",
+  "bin": {
+    "node-advanced": "bin/node-advanced"
+  },
+  "files": [
+    "bin",
+    "server.js"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server",
+    "build": "gulp"
+  },
+  "dependencies": {
+    "connect": "^3.4.1"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-brass": "^0.1.6",
+    "gulp-brass-npm": "0.0.4",
+    "rimraf": "^2.5.2"
+  },
+  "author": "",
+  "license": "ISC"
+}

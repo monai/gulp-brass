@@ -1,0 +1,55 @@
+%define _topdir {{buildDir}}
+%define _base   {{name}}
+
+Summary:        {{summary}}
+Name:           {{name}}
+Group:          {{group}}
+Version:        {{version}}
+Release:        {{release}}
+License:        {{license}}
+{{#if ur}}
+URL:            {{url}}
+{{/if}}
+
+AutoReq:        0
+AutoProv:       0
+AutoReqProv:    0
+
+%description
+{{description}}
+
+Requires(pre): shadow-utils
+Requires(post): systemd
+Requires(preun): systemd
+Requires(postun): systemd
+BuildRequires: systemd
+
+%pre
+getent group {{service.group}} >/dev/null || groupadd -r {{service.group}}
+getent passwd {{service.user}} >/dev/null || \
+    useradd -r -g {{service.group}} -d {{installDir}} -s /sbin/nologin \
+    -c "An advanced Node.js service user" {{service.user}}
+exit 0
+
+%post
+if [ $1 -eq 1 ] ; then
+    # Initial installation
+    /usr/bin/systemctl preset {{service.name}}.service >/dev/null 2>&1 || :
+fi
+
+%preun
+if [ $1 -eq 0 ] ; then
+    # Package removal, not upgrade
+    /usr/bin/systemctl --no-reload disable {{service.name}}.service > /dev/null 2>&1 || :
+    /usr/bin/systemctl stop {{service.name}}.service > /dev/null 2>&1 || :
+fi
+
+%postun
+/usr/bin/systemctl daemon-reload >/dev/null 2>&1 || :
+if [ $1 -ge 1 ] ; then \
+    # Package upgrade, not uninstall
+    /usr/bin/systemctl try-restart {{service.name}}.service >/dev/null 2>&1 || :
+fi
+
+%files
+{{{specFileList}}}
