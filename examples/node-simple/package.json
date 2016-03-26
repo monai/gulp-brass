@@ -21,7 +21,7 @@
   "devDependencies": {
     "gulp": "^3.9.1",
     "gulp-brass": "^0.1.6",
-    "gulp-brass-npm": "0.0.4",
+    "gulp-brass-npm": "^0.0.5",
     "rimraf": "^2.5.2"
   },
   "author": "",
