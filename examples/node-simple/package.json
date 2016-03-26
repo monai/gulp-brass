@@ -1,7 +1,7 @@
 {
   "name": "node-simple",
   "version": "1.0.0",
-  "description": "A simple shell script",
+  "description": "A simple Node.js service",
   "main": "server.js",
   "bin": {
     "node-simple": "bin/node-simple"
