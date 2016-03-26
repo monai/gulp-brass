@@ -18,10 +18,18 @@ AutoReqProv:    0
 %description
 {{description}}
 
+Requires(pre): shadow-utils
 Requires(post): systemd
 Requires(preun): systemd
 Requires(postun): systemd
 BuildRequires: systemd
+
+%pre
+getent group {{service.group}} >/dev/null || groupadd -r {{service.group}}
+getent passwd {{service.user}} >/dev/null || \
+    useradd -r -g {{service.group}} -d {{installDir}} -s /sbin/nologin \
+    -c "An advanced Node.js service user" {{service.user}}
+exit 0
 
 %post
 if [ $1 -eq 1 ] ; then
