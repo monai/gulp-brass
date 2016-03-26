@@ -13,7 +13,21 @@ gulp-brass follows gulp pattern `gulp.src(...)` -> `transform` -> `gulp.dest(...
 
 ## How to use
 
-Below is API documentation but it's highly recommended look at [gulpfile.js example](/examples/theapp/gulpfile.js) to see how it may look as a whole.
+Below is API documentation but it's highly recommended look at [examples](/examples) to see how gulpfile might look as a whole.
+
+## FAQ
+
+**Q: How to create user during RPM installation?**
+
+A: See [example](/examples/examples/node-advanced/gulpfile.js#L64).
+
+**Q: How to customize systemd unit file?**
+
+A: See [example](/examples/examples/node-advanced/gulpfile.js#L51).
+
+**Q: I need feature X to be added to spec/unit file**
+
+A: These files are meant to be extended by user. See examples above.
 
 ## RPM
 
@@ -101,7 +115,7 @@ This task is recommended way to run setup since `rpm.setup()` doesn't return str
 
 ### rpm.setup(callback)
 
-Creates build directory (`./brass_build`) and directory structure required by `rpmbuild` in it. 
+Creates build directory (`./brass_build`) and directory structure required by `rpmbuild` in it.
 
 ### rpm.files()
 
