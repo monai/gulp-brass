@@ -1,6 +1,5 @@
 var gulp = require('gulp');
 var path = require('path');
-var exec = require('child_process').exec;
 var rimraf = require('rimraf');
 var brass = require('../../index');
 var npm = require('gulp-brass-npm');
