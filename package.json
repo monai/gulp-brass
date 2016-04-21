@@ -13,8 +13,7 @@
     "handlebars": "^4.0.5",
     "handlebars-helper-equal": "^1.0.0",
     "mkdirp": "^0.5.1",
-    "rimraf": "^2.5.2",
-    "through2": "^2.0.1"
+    "rimraf": "^2.5.2"
   },
   "files": [
     "assets",

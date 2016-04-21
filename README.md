@@ -155,11 +155,13 @@ var util = brass.util;
 
 Returns path to internal [asset](/assets). Intended to use with `gulp.src()`.
 
-### util.stream(callback)
+### util.stream(callback, flush)
 
-Returns simplified [`through2.obj`](https://github.com/rvagg/through2) stream.
+Returns transform stream in object mode.
 
 Callback arguments are `callback(file, callback)`.
+
+Flush arguments are `flush(callback)`.
 
 ### util.template(data)
 
