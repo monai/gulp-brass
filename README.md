@@ -19,11 +19,11 @@ Below is API documentation but it's highly recommended look at [examples](/examp
 
 **Q: How to create user during RPM installation?**
 
-A: See [example](/examples/examples/node-advanced/gulpfile.js#L64).
+A: See [example](/examples/node-advanced/gulpfile.js#L64).
 
 **Q: How to customize systemd unit file?**
 
-A: See [example](/examples/examples/node-advanced/gulpfile.js#L51).
+A: See [example](/examples/node-advanced/gulpfile.js#L51).
 
 **Q: I need feature X to be added to spec/unit file**
 
@@ -155,11 +155,13 @@ var util = brass.util;
 
 Returns path to internal [asset](/assets). Intended to use with `gulp.src()`.
 
-### util.stream(callback)
+### util.stream(callback, flush)
 
-Returns simplified [`through2.obj`](https://github.com/rvagg/through2) stream.
+Returns transform stream in object mode.
 
 Callback arguments are `callback(file, callback)`.
+
+Flush arguments are `flush(callback)`.
 
 ### util.template(data)
 

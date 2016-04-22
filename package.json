@@ -1,7 +1,7 @@
 {
   "name": "gulp-brass",
   "description": "Build RPM package",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "author": "monai",
   "bugs": {
     "url": "https://github.com/monai/gulp-brass/issues"
@@ -13,8 +13,7 @@
     "handlebars": "^4.0.5",
     "handlebars-helper-equal": "^1.0.0",
     "mkdirp": "^0.5.1",
-    "rimraf": "^2.5.2",
-    "through2": "^2.0.1"
+    "rimraf": "^2.5.2"
   },
   "files": [
     "assets",
