@@ -1,7 +1,7 @@
 %define _topdir {{buildDir}}
 %define _base   {{name}}
 
-Summary:        {{summary}}
+Summary:        {{{summary}}}
 Name:           {{name}}
 Group:          {{group}}
 Version:        {{version}}
@@ -16,7 +16,7 @@ AutoProv:       0
 AutoReqProv:    0
 
 %description
-{{description}}
+{{{description}}}
 
 {{#equal service.type 'systemd'}}
 Requires(post): systemd
