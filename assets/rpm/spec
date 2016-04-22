@@ -18,6 +18,7 @@ AutoReqProv:    0
 %description
 {{description}}
 
+{{#equal service.type 'systemd'}}
 Requires(post): systemd
 Requires(preun): systemd
 Requires(postun): systemd
@@ -42,6 +43,7 @@ if [ $1 -ge 1 ] ; then \
     # Package upgrade, not uninstall
     /usr/bin/systemctl try-restart {{service.name}}.service >/dev/null 2>&1 || :
 fi
+{{/equal}}
 
 %files
 {{{specFileList}}}
